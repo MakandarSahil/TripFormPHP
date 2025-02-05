@@ -1,20 +1,17 @@
 <?php 
 $insert = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $server = "localhost"; // Corrected server name
+    $server = "localhost"; 
     $username = "root";
     $password = "";
-    $database = "trip"; // Make sure this database exists
+    $database = "trip"; 
 
-    // Create connection
     $con = mysqli_connect($server, $username, $password, $database);
 
-    // Check connection
     if (!$con) {
         die("Connection to this database failed due to " . mysqli_connect_error());
     }
 
-    // Collect POST variables
     $name = $_POST['name'];
     $age = $_POST['age'];
     $gender = $_POST['gender'];
@@ -22,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $address = $_POST['address'];
 
-    // Prevent SQL injection
     $name = mysqli_real_escape_string($con, $name);
     $age = (int) $age;
     $gender = mysqli_real_escape_string($con, $gender);
@@ -30,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = mysqli_real_escape_string($con, $phone);
     $address = mysqli_real_escape_string($con, $address);
 
-    // SQL query to insert data
     $sql = "INSERT INTO `trip` (`name`, `age`, `gender`, `email`, `phone`, `address`, `dt`) 
             VALUES ('$name', '$age', '$gender', '$email', '$phone', '$address', current_timestamp())";
 
@@ -40,7 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "ERROR: $sql <br>" . mysqli_error($con);
     }
 
-    // Close the database connection
     mysqli_close($con);
 }
 ?>
